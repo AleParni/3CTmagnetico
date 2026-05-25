@@ -14,6 +14,8 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --pdf-color: #ef4444;
+            --success: #16a34a;
+            --error: #dc2626;
         }
 
         body {
@@ -148,16 +150,463 @@
             border: 1px solid #bfdbfe;
             border-radius: 12px;
             padding: 30px;
-            text-align: center;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
+            text-align: left; /* Alineación cambiada para mejorar lectura de preguntas largas */
         }
 
-        .quiz-box h3 {
+        .quiz-welcome {
+            text-align: center;
+        }
+
+        .quiz-welcome h3 {
             margin: 0 0 10px 0;
             font-size: 1.3rem;
         }
 
+        .quiz-welcome p {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .quiz-content {
+            display: none;
+        }
+
+        .quiz-progress {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background-color: white;
+            border: 1px solid #bfdbfe;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            color: var(--text-main);
+            box-sizing: border-box;
+        }
+
+        .option-btn:hover {
+            background-color: #f0f7ff;
+            border-color: var(--accent);
+        }
+
+        .option-btn.correct {
+            background-color: #dcfce7;
+            border-color: var(--success);
+            color: #14532d;
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: var(--error);
+            color: #7f1d1d;
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .feedback-correct {
+            background-color: #dcfce7;
+            color: #15803d;
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback-incorrect {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border-left: 4px solid var(--error);
+        }
+
+        .quiz-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-next {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .btn-next:hover {
+            background-color: #334155;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Física: Espacio de Aprendizaje</h1>
+        <p>Curso de Electromagnetismo — Bachillerato</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="section-title">Materiales de Estudio y Repartidos</div>
+        
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <div class="card-meta">Teórico / Conceptos</div>
+                    <h3 class="card-title">Campo Magnético</h3>
+                    <p class="card-desc">Introducción histórica y formal al concepto de campo magnético, propiedades de los polos y vector inducción magnética.</p>
+                </div>
+                <a href="campomagnetico.pdf" target="_blank" class="btn btn-pdf">Ver PDF / Descargar</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-meta">Fuerzas y Leyes</div>
+                    <h3 class="card-title">Corrientes y Campos</h3>
+                    <p class="card-desc">Análisis de la Fuerza de Lorentz, desvío de cargas en movimiento e interacciones fundamentales del electromagnetismo.</p>
+                </div>
+                <a href="corrientesycamposmagneticos.pdf" target="_blank" class="btn btn-pdf">Ver PDF / Descargar</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-meta">Práctica</div>
+                    <h3 class="card-title">Ejercicios de Práctica</h3>
+                    <p class="card-desc">Problemas de aplicación directa y situaciones de examen sobre fuerza magnética y trayectorias semicirculares.</p>
+                </div>
+                <a href="ejerciciosdecampomagnetico.pdf" target="_blank" class="btn btn-pdf">Ver PDF / Descargar</a>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-meta">Evaluación Avanzada</div>
+                    <h3 class="card-title">Repartido: Ley de Ampère</h3>
+                    <p class="card-desc">Cálculo de la circulación del campo magnético y análisis de simetrías en hilos conductores e interiores de cilindros.</p>
+                </div>
+                <a href="repartidodeleydeampere.pdf" target="_blank" class="btn btn-pdf">Ver PDF / Descargar</a>
+            </div>
+        </div>
+
+        <div class="section-title">Autoevaluación Formativa</div>
+        
+        <div class="quiz-box" id="quiz-box">
+            <div id="quiz-welcome" class="quiz-welcome">
+                <h3>¿Listo para ponerte a prueba?</h3>
+                <p>Accede al cuestionario dinámico con corrección inmediata para revisar tus ideas previas y repasar las ecuaciones clave.</p>
+                <button onclick="startQuiz()" class="btn btn-quiz">Iniciar Cuestionario Interactivo</button>
+            </div>
+
+            <div id="quiz-content" class="quiz-content">
+                <div class="quiz-progress" id="quiz-progress">Pregunta 1 de 15</div>
+                <div class="quiz-question" id="quiz-question">Aquí va la pregunta</div>
+                <div class="quiz-options" id="quiz-options"></div>
+                <div id="quiz-feedback" class="quiz-feedback"></div>
+                <div class="quiz-actions">
+                    <button id="quiz-next-btn" class="btn-next" onclick="nextQuestion()" style="display:none;">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Diseñado como entorno educativo digital para estudiantes de ciencias.</p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Si acercamos una brújula a un conductor por el que circula una corriente alterna de alta frecuencia, se observa que la aguja de la brújula no se desvía. ¿A qué se debe principalmente este fenómeno?",
+                options: [
+                    "La inercia mecánica de la aguja le impide seguir las rápidas inversiones del campo magnético, experimentando una fuerza neta promedio nula.",
+                    "La corriente alterna no genera campo magnético en absoluto debido a la cancelación instantánea de cargas.",
+                    "El campo magnético de la corriente alterna se propaga únicamente de forma radial hacia afuera.",
+                    "La brújula solo es sensible a los campos eléctricos alternos inducidos por el conductor."
+                ],
+                answer: 0,
+                feedback: "Al cambiar el sentido de la corriente continuamente a gran velocidad, el campo magnético oscila de igual manera. Debido a la masa e inercia rotacional de la aguja de la brújula, esta no puede seguir estas variaciones tan rápidas y permanece en su posición promedio equilibrada."
+            },
+            {
+                question: "2. Un conductor recto de 25 cm de largo se encuentra inmerso en una región con un campo magnético uniforme de 0,020 T. Cuando el conductor forma un ángulo de 53° con el campo, experimenta una fuerza magnética de 2,4 x 10^-3 N. ¿Cuál es la intensidad de la corriente que circula por él?",
+                options: [
+                    "0,48 A",
+                    "0,60 A",
+                    "1,20 A",
+                    "0,15 A"
+                ],
+                answer: 1,
+                feedback: "Utilizando la ley de la fuerza magnética sobre un segmento (F = I . L . B . sen(θ)) y convirtiendo la longitud a metros (0,25 m), despejamos la corriente de la fórmula: I = 2,4x10^-3 / (0,25 . 0,020 . sen(53°)) = 0,60 A."
+            },
+            {
+                question: "3. Un alambre de masa 30 g se encuentra en reposo sostenido por un resorte. Una sección del alambre de 0,50 m de largo está inmersa en un campo magnético uniforme y saliente de 0,13 T. Para que el resorte no ejerza ninguna fuerza (longitud natural), ¿cuánto debe valer la corriente y hacia dónde debe dirigirse?",
+                options: [
+                    "4,5 A hacia la izquierda",
+                    "0,45 A hacia la derecha",
+                    "4,5 A hacia la derecha",
+                    "2,3 A hacia la izquierda"
+                ],
+                answer: 2,
+                feedback: "Para que el resorte no ejerza fuerza, la fuerza magnética hacia arriba debe igualar al peso (P = m . g = 0,030 kg . 9,8 m/s² = 0,294 N). Despejando de F = I . L . B, obtenemos I = 0,294 / (0,50 . 0,13) ≈ 4,5 A. Por la regla de la mano derecha, si el campo es saliente y queremos fuerza hacia arriba, la corriente debe ir hacia la derecha."
+            },
+            {
+                question: "4. ¿Por qué un campo magnético es capaz de ejercer una fuerza neta sobre un conductor rectilínio por el que circula una corriente eléctrica, a pesar de que el conductor en su conjunto posee una carga neta nula?",
+                options: [
+                    "Porque el campo ejerce fuerzas sobre las cargas móviles (electrones), las cuales transmiten el empuje a la estructura atómica del material mediante colisiones.",
+                    "Porque al circular corriente, el conductor adquiere instantáneamente una enorme carga neta positiva.",
+                    "Porque el campo magnético solo interactúa con los núcleos atómicos estacionarios cargados positivamente.",
+                    "Porque el magnetismo destruye la neutralidad eléctrica del alambre atrayendo cargas electrostáticas externas."
+                ],
+                answer: 0,
+                feedback: "Aunque el cable es eléctricamente neutro, los electrones individuales en movimiento sufren la fuerza de Lorentz. Al desplazarse y chocar mecánicamente contra los iones de la red cristalina fija del metal, transfieren ese empuje a toda la barra conductora."
+            },
+            {
+                question: "5. Se lanza una partícula con carga q = -5,0 μC y velocidad v = 4,0 x 10^5 m/s en una región con campo uniforme. Si al moverse en el eje +z la fuerza es nula, y al moverse en +x la fuerza es máxima e igual a 5,4 x 10^-3 N en el eje -y, ¿cuáles son el módulo y sentido de B?",
+                options: [
+                    "2,7 T en el eje -z",
+                    "0,37 T en el eje +x",
+                    "2,7 T en el eje +z",
+                    "1,1 T en el eje +y"
+                ],
+                answer: 2,
+                feedback: "Una fuerza nula en el eje z indica que el campo está alineado con ese eje. De la fuerza máxima, despejamos B = F / (|q| . v) = 5,4x10^-3 / (5,0x10^-6 . 4,0x10^5) = 2,7 T. Aplicando la regla de la mano derecha (teniendo en cuenta que al ser carga negativa se invierte el resultado), para una velocidad en +x y un campo en +z, la fuerza apunta hacia -y."
+            },
+            {
+                question: "6. Dos partículas con cargas de igual valor absoluto ingresan con la misma velocidad a una región de campo magnético uniforme. Si la partícula 1 describe una trayectoria circular con un radio que es el doble del radio de la partícula 2, ¿qué se puede afirmar con certeza sobre sus masas?",
+                options: [
+                    "La masa de la partícula 1 es la mitad de la masa de la partícula 2.",
+                    "La masa de la partícula 1 es el doble de la masa de la partícula 2.",
+                    "Ambas partículas tienen exactamente la misma masa.",
+                    "La masa de la partícula 1 es cuatro veces mayor que la de la partícula 2."
+                ],
+                answer: 1,
+                feedback: "El radio de la órbita circular en un campo magnético está dado por la relación R = (m . v) / (|q| . B). Como la velocidad (v), el campo (B) y el módulo de la carga (|q|) son idénticos para ambas, el radio es directamente proporcional a la masa. Por lo tanto, a mayor radio, mayor masa."
+            },
+            {
+                question: "7. Un protón ingresa horizontalmente a una región con una velocidad de 2,8 x 10^6 m/s y es desviado por un campo magnético uniforme de 4,0 x 10^-3 T perpendicular a su dirección. ¿Cuánto tiempo permanece allí si realiza exactamente media circunferencia?",
+                options: [
+                    "1,6 x 10^-5 s",
+                    "4,1 x 10^-6 s",
+                    "8,2 x 10^-6 s",
+                    "5,2 x 10^-7 s"
+                ],
+                answer: 2,
+                feedback: "El período para una revolución completa de 360° es T = (2 . 𝛑 . m) / (q . B). Para describir una semicircunferencia (media vuelta), el tiempo empleado es exactamente la mitad de un período completo: t = (𝛑 . m) / (q . B). Evaluando con la masa (1,67x10^-27 kg) y carga del protón (1,60x10^-19 C), se obtienen 8,2 x 10^-6 s."
+            },
+            {
+                question: "8. Un electrón ingresa a una zona donde existen un campo eléctrico de 2,0 x 10^3 N/C y un campo magnético de 3,2 x 10^-3 T cruzados y uniformes. ¿Qué velocidad debe tener el electrón para atravesar la región en línea recta (MRU) sin desviarse?",
+                options: [
+                    "1,60 x 10^6 m/s",
+                    "6,25 x 10^5 m/s",
+                    "6,40 x 10^-6 m/s",
+                    "3,12 x 10^4 m/s"
+                ],
+                answer: 1,
+                feedback: "Para que la partícula no sufra desvío alguno, las magnitudes de la fuerza eléctrica y la fuerza magnética deben ser iguales (q . E = q . v . B). Al simplificar la carga, obtenemos la fórmula del selector de velocidades: v = E / B = 2,0x10^3 / 3,2x10^-3 = 6,25 x 10^5 m/s."
+            },
+            {
+                question: "9. Al calcular la circulación del campo magnético a lo largo de una curva cerrada C, se obtiene un valor de -3,0 x 10^-6 T.m. Sabiendo que en el centro de la curva hay un único conductor perpendicular, ¿cuál es la intensidad de la corriente y su sentido relativo?",
+                options: [
+                    "3,8 A, en el mismo sentido del recorrido de la curva",
+                    "1,2 A, tangencial al plano horizontal de la curva",
+                    "2,4 A, en sentido opuesto al determinado por la regla de la mano derecha según el recorrido",
+                    "0,60 A, perpendicular hacia afuera de la espira"
+                ],
+                answer: 2,
+                feedback: "Aplicando la Ley de Ampère (Circulación = μ0 . I), despejamos la corriente ampediana encerrada: I = -3,0x10^-6 / (4 . 𝛑 . 10^-7) ≈ -2,4 A. El signo negativo indica explícitamente que la corriente fluye en sentido contrario al determinado por los dedos al abrazar el recorrido."
+            },
+            {
+                question: "10. Considere dos conductores rectos y largos, paralelos entre sí. La corriente en el conductor 'a' es de 3,0 A y en el 'b' es de 7,0 A. Si en los puntos medios equidistantes a ambos conductores el campo magnético neto no es nulo, ¿qué tipo de fuerza ejercen entre sí?",
+                options: [
+                    "Se atraen, porque las corrientes circulan en el mismo sentido.",
+                    "No ejercen ninguna fuerza mutua porque los campos individuales son estáticos.",
+                    "Se repelen, porque las corrientes circulan en sentidos opuestos.",
+                    "Efectúan un torque de rotación puro sin desplazarse lateralmente."
+                ],
+                answer: 2,
+                feedback: "En el punto medio, si las corrientes tuvieran el mismo sentido, sus vectores de campo magnético apuntarían en direcciones opuestas y se restarían. Como el enunciado aclara que los campos se refuerzan dando un valor neto elevado, significa que van en sentidos opuestos, lo que genera repulsión."
+            },
+            {
+                question: "11. Un cable coaxial está compuesto por un alambre central con una corriente de 3,0 A hacia afuera de la página, y un cilindro exterior concéntrico con una corriente de 6,0 A hacia adentro. ¿Cuánto vale la corriente neta encerrada por una curva circular externa que abarque a ambos?",
+                options: [
+                    "9,0 A hacia afuera de la página",
+                    "0,0 A debido a la simetría concéntrica cilíndrica",
+                    "3,0 A hacia adentro de la página",
+                    "18,0 A hacia adentro de la página"
+                ],
+                answer: 2,
+                feedback: "La Ley de Ampère exige la suma algebraica de las corrientes que perforan la superficie. Al poseer sentidos opuestos, restamos algebraicamente sus magnitudes: I_neta = 6,0 A (adentro) - 3,0 A (afuera) = 3,0 A con dirección resultante hacia adentro de la página."
+            },
+            {
+                question: "12. Se tiene una bobina cilíndrica (solenoide) ideal de 400 vueltas y 20 cm de largo. Si se mide un campo magnético en su interior de módulo 1,26 x 10^-3 T, ¿qué corriente circula por el devanado? (Considere μ0 ≈ 1,26 x 10^-6 T.m/A)",
+                options: [
+                    "2,5 A",
+                    "0,12 A",
+                    "0,50 A",
+                    "5,0 A"
+                ],
+                answer: 2,
+                feedback: "El campo dentro de un solenoide ideal se calcula como B = μ0 . (N / L) . I. Pasando la longitud a metros (L = 0,20 m) y despejando la corriente, nos queda: I = (1,26x10^-3 . 0,20) / (1,26x10^-6 . 400) = 2,52x10^-4 / 5,04x10^-4 = 0,50 A."
+            },
+            {
+                question: "13. Al determinar la circulación del campo magnético alrededor de una placa de un capacitor en proceso de carga, se observa que no es nula a pesar de que no hay cables físicos atravesando ese espacio intermedio. ¿Qué concepto de Maxwell resuelve esta contradicción?",
+                options: [
+                    "La existencia de monopolos magnéticos transitorios en los bornes del dispositivo.",
+                    "La resistencia eléctrica del aire que se transforma en conducción iónica.",
+                    "La corriente de desplazamiento, asociada a la variación temporal del flujo eléctrico entre las placas.",
+                    "El flujo de masa remanente proveniente del calentamiento térmico."
+                ],
+                answer: 2,
+                feedback: "James Clerk Maxwell postuló que un campo eléctrico variable en el tiempo (como el flujo eléctrico cambiante entre las placas de un capacitor al cargarse) produce un campo magnético idéntico al de una corriente real, llamándolo 'corriente de desplazamiento'."
+            },
+            {
+                question: "14. En una región entre las placas de un capacitor, el flujo de campo eléctrico varía con el tiempo a una tasa constante de dΦ/dt = 5,65 x 10^8 V.m/s. ¿Cuánto vale la corriente de desplazamiento generada? (Considere ε0 ≈ 8,85 x 10^-12 C²/N.m²)",
+                options: [
+                    "50 A",
+                    "0,50 A",
+                    "5,0 mA",
+                    "0,0 A"
+                ],
+                answer: 2,
+                feedback: "La corriente de desplazamiento se calcula directamente mediante la relación fundamental de Maxwell: I_d = ε0 . (dΦ_E / dt). Multiplicando los valores: 8,85x10^-12 . 5,65x10^8 = 5,0 x 10^-3 A, lo que equivale a 5,0 mA."
+            },
+            {
+                question: "15. Un cilindro imaginario se coloca cerca de un imán de barra de modo que las líneas de campo entran limpiamente por una de sus tapas y salen en su totalidad por la otra tapa y paredes curvas laterales. ¿Cuánto vale el flujo magnético neto a través de la superficie cerrada total?",
+                options: [
+                    "Un valor estrictamente positivo proporcional a la masa magnética del imán.",
+                    "Un valor negativo debido a que la densidad de líneas es mayor en la entrada.",
+                    "Cero, de acuerdo con la ley de Gauss para el magnetismo.",
+                    "Depende exclusivamente del radio geométrico y de la longitud asignada al cilindro."
+                ],
+                answer: 2,
+                feedback: "La ley de Gauss para el magnetismo establece que las líneas de campo magnético siempre son cerradas (no existen monopolos magnéticos aislados). Por lo tanto, toda línea que entra en un volumen cerrado debe salir de él de forma obligatoria, haciendo que el flujo neto total sea siempre idéntico a cero."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            document.getElementById('quiz-welcome').style.display = 'none';
+            document.getElementById('quiz-content').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            const q = questions[currentQuestionIndex];
+            
+            document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('quiz-next-btn').style.display = 'none';
+
+            q.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerText = option;
+                button.onclick = () => selectOption(index);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            if (answered) return; 
+            answered = true;
+
+            const q = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            const feedbackEl = document.getElementById('quiz-feedback');
+
+            if (selectedIndex === q.answer) {
+                buttons[selectedIndex].classList.add('correct');
+                feedbackEl.className = 'quiz-feedback feedback-correct';
+                feedbackEl.innerHTML = `<strong>¡Correcto!</strong> ${q.feedback}`;
+                score++;
+            } else {
+                buttons[selectedIndex].classList.add('incorrect');
+                buttons[q.answer].classList.add('correct'); 
+                feedbackEl.className = 'quiz-feedback feedback-incorrect';
+                feedbackEl.innerHTML = `<strong>Incorrecto.</strong> ${q.feedback}`;
+            }
+
+            feedbackEl.style.display = 'block';
+            document.getElementById('quiz-next-btn').style.display = 'inline-block';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                document.getElementById('quiz-next-btn').innerText = "Finalizar Cuestionario";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const box = document.getElementById('quiz-box');
+            box.style.textAlign = 'center';
+            box.innerHTML = `
+                <h3>¡Cuestionario Finalizado!</h3>
+                <p style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">
+                    Tu puntaje: ${score} de ${questions.length} correctas (${Math.round((score/questions.length)*100)}%)
+                </p>
+                <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                    ${score >= 12 ? '¡Excelente nivel! Tienes un dominio teórico impecable del electromagnetismo.' : 'Buen intento. Te sugerimos volver a revisar los ejercicios y repasar los repartidos de Ampère y Fuerza Magnética para fijar los detalles numéricos.'}
+                </p>
+                <button onclick="location.reload()" class="btn btn-quiz" style="max-width: 250px; margin: 10px auto 0;">Reiniciar Cuestionario</button>
+            `;
+        }
+    </script>
+</body>
+</html>
         .quiz-box p {
             color: #1e3a8a;
             margin-bottom: 20px;
